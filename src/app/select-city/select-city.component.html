@@ -1,0 +1,144 @@
+<br>
+<br>
+<div class="row">
+<div class="col-sm-4" align="right">
+<mat-form-field>
+    <mat-select (openedChange)="openedChange($event)" (selectionChange)="selectedOrigin($event)"
+   
+     placeholder="Origin" (blur)="boxHidden='false'" >
+	
+    <div class="select-container">
+    <mat-optgroup >
+  <mat-form-field style="width:100%;">
+    <input matInput #search autocomplete="off" placeholder="Search" aria-label="Search" matInput [formControl]="searchTextboxControl">
+         </mat-form-field>
+    </mat-optgroup>
+    <mat-optgroup>
+       <button mat-button  (click)="addNew()">
+                                          <mat-icon>add</mat-icon>
+                                          <span>Add New</span>
+                                        </button>
+    </mat-optgroup>
+    <mat-optgroup *ngIf="!boxHidden">
+        <mat-form-field class="example-form-field">
+        <input matInput type="text" maxlength="3" placeholder="Enter City"
+        [(ngModel)]="value">
+        <button mat-button  matSuffix mat-icon-button (click)="addCity()">
+            <mat-icon>done</mat-icon>
+          </button>
+        </mat-form-field>
+    </mat-optgroup>
+    <mat-optgroup *ngIf="(filteredOptions | async).length == 0">
+      <div>No results found!</div>
+    </mat-optgroup>
+ <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+</div>
+</mat-select>
+</mat-form-field>
+</div>
+<div class="col-sm-4"></div>
+<div class="col-sm-4" >
+  <mat-form-field>
+      <mat-select (openedChange)="openedChange($event)" (selectionChange)="selectedDestination($event)"
+     
+       placeholder="Destination" (blur)="boxHidden='false'" >
+    
+      <div class="select-container">
+      <mat-optgroup >
+    <mat-form-field style="width:100%;">
+      <input matInput #search autocomplete="off" placeholder="Search" aria-label="Search" matInput [formControl]="searchTextboxControl">
+           </mat-form-field>
+      </mat-optgroup>
+      <mat-optgroup>
+         <button mat-button  (click)="addNew()">
+                                            <mat-icon>add</mat-icon>
+                                            <span>Add New</span>
+                                          </button>
+      </mat-optgroup>
+      <mat-optgroup *ngIf="!boxHidden">
+          <mat-form-field class="example-form-field">
+          <input matInput type="text" maxlength="3" placeholder="Enter City"
+          [(ngModel)]="value">
+          <button mat-button  matSuffix mat-icon-button (click)="addCity()">
+              <mat-icon>done</mat-icon>
+            </button>
+          </mat-form-field>
+      </mat-optgroup>
+      <mat-optgroup *ngIf="(filteredOptions | async).length == 0">
+        <div>No results found!</div>
+      </mat-optgroup>
+   <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+  </div>
+  </mat-select>
+  </mat-form-field>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-5">
+  </div>
+  <div class="col-sm-2">
+    <button mat-raised-button (click)="addPath()">Submit</button>
+  </div>
+</div>
+<br>
+
+   <div *ngIf="!loading" class="row" >
+<div *ngFor="let element of journeyList; let i = index;" >
+  <div *ngIf="i == 0">
+<svg width="30" height="40">
+  <circle cx="20" cy="10" r="5" stroke="black" stroke-width="3" fill="red" />
+  <text x="0" y="30" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text>
+</svg>
+  </div>
+  <div *ngIf="i > 0"> 
+    <div *ngIf="originArray[i] == destinationArray[i-1]">
+      <svg width="80" height="200">
+        
+        <line [attr.x1]="x1" y1="10" [attr.x2]="x2" y2="10" stroke="red"/>
+        <circle [attr.cx]="x2" cy="10" r="5" stroke="black" stroke-width="3" fill="red" />
+        <text  [attr.x]="45" y="30" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text></svg>
+     </div>
+     <div *ngIf="originArray[i] != destinationArray[i-1]">
+       <div [hidden]="equal">
+      <svg width="110" height="200">
+        <defs>
+          <marker id="arrow" viewBox="0 -5 10 10" refX="5" refY="0" markerWidth="5" markerHeight="5" orient="auto">
+            <path class="cool" d="M0,-5L10,0L0,5" class="arrowHead"></path>
+          </marker>
+        </defs>
+        <line [attr.x1]="x1" y1="10" [attr.x2]="x2" y2="10" stroke="blue" marker-end="url(#arrow)"/>
+        <circle [attr.cx]="x2 + 10" cy="10" r="5" stroke="black" stroke-width="3" fill="blue" />
+        <text  [attr.x]="45" y="30" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text></svg>
+      </div>
+      <
+     </div>
+    </div>
+
+</div>
+</div>
+<!-- <svg height="480" width="1000">
+
+    <path d=" M 0,350 C 80,370 80,250 150,250 " stroke="yellow" stroke-width="5" fill="none" />
+    <path d=" M 100,350 C 180,350 180,450 250,450 " stroke="blue" stroke-width="5" fill="none" />
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L0,6 L9,3 z" fill="#f00" />
+    </marker>
+    <path d="M 175 200 l 150 0" stroke="green" stroke-width="5" fill="none" />
+    <!-- Mark relevant points -->
+    <!-- <g stroke="black" stroke-width="3" fill="yellow">
+      <circle id="pointA" cx="100" cy="350" r="4" />
+      <circle id="pointB" cx="350" cy="250" r="4" />
+      <circle id="pointC" cx="250" cy="250" r="4" />
+    </g>
+    <!-- Label the points -->
+    <!-- <g font-size="15" font-family="sans-serif" fill="black" stroke="none" text-anchor="middle">
+      <text x="100" y="350" dx="-30"></text>
+      <text x="250" y="50" dy="-10">B</text>
+      <text x="400" y="350" dx="30">C</text>
+    </g>
+    Sorry, your browser does not support inline SVG.
+  </svg> --> 

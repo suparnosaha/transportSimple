@@ -1,0 +1,18 @@
+.additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+  }
+  .select-container{
+    margin-top:10px;
+  }
+
+  .dot {
+    height: 10px;
+    width: 10px;
+    background-color: rgb(49, 131, 197);
+    border-radius: 50%;
+    display: inline-block;
+    font-family: 'Times New Roman', Times, serif;
+    font-size:x-small;
+  }
+  

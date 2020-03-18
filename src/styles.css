@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.close.mat-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    background:red;
+    padding: 5px;
+    line-height: 14px;
+    min-width: auto;
+  }
