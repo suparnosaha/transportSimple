@@ -85,36 +85,90 @@
   </div>
 </div>
 <br>
-
+<div *ngIf="errorMessage">{{errorMessage}}</div>
    <div *ngIf="!loading" class="row" >
 <div *ngFor="let element of journeyList; let i = index;" >
   <div *ngIf="i == 0">
-<svg width="30" height="40">
-  <circle cx="20" cy="10" r="5" stroke="black" stroke-width="3" fill="red" />
-  <text x="0" y="30" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text>
+<svg width="30" height="200">
+  <circle cx="20" cy="60" r="5" stroke="black" stroke-width="3" fill="red" />
+  <text x="0" y="80" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text>
 </svg>
   </div>
   <div *ngIf="i > 0"> 
     <div *ngIf="originArray[i] == destinationArray[i-1]">
+      <div *ngIf="journeyList[i] != journeyList[i-1]" >
+        <div *ngIf="i <= 1">
       <svg width="80" height="200">
-        
-        <line [attr.x1]="x1" y1="10" [attr.x2]="x2" y2="10" stroke="red"/>
-        <circle [attr.cx]="x2" cy="10" r="5" stroke="black" stroke-width="3" fill="red" />
-        <text  [attr.x]="45" y="30" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text></svg>
+        <line [attr.x1]="x1" y1="60" [attr.x2]="x2" y2="60" stroke="red"/>
+        <circle [attr.cx]="x2" cy="60" r="5" stroke="black" stroke-width="3" fill="red" />
+        <text  [attr.x]="45" y="80" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text></svg>
      </div>
+     <div *ngIf="i > 1 && journeyList[i-1] != journeyList[i-2]">
+      <svg width="80" height="200">
+        <line [attr.x1]="x1" y1="60" [attr.x2]="x2" y2="60" stroke="red"/>
+        <circle [attr.cx]="x2" cy="60" r="5" stroke="black" stroke-width="3" fill="red" />
+        <text  [attr.x]="45" y="80" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text></svg>
+        </div>
+        <div *ngIf="i > 1 && journeyList[i-1] == journeyList[i-2]">
+      <svg width="120" height="200">
+        <path d=" M 0,10 C 50,10 50,70 100,60 " stroke="grey" stroke-width="3" fill="none" />
+        <circle [attr.cx]="110" cy="60" r="5" stroke="black" stroke-width="3" fill="yellow" />
+        <text  [attr.x]="90" y="80" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text></svg>
+    </div>
+  </div>
+     <div *ngIf="journeyList[i] == journeyList[i-1]">
+      <svg width="190" height="200">
+        <path d="M 0,60 C 50,70 50,10 100,10" stroke="yellow" stroke-width="3" fill="none" />
+        <circle [attr.cx]="100" cy="10" r="5" stroke="black" stroke-width="3" fill="blue" />
+        <text  [attr.x]="60" y="30" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text>
+        <line [attr.x1]="105" y1="10" [attr.x2]="175" y2="10" stroke="blue" marker-end="url(#arrow)"/>
+        <circle [attr.cx]="185" cy="10" r="5" stroke="black" stroke-width="3" fill="blue" />
+        <text  [attr.x]="165" y="30" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text>
+      </svg>
+    </div>
+    </div>
      <div *ngIf="originArray[i] != destinationArray[i-1]">
-       <div [hidden]="equal">
-      <svg width="110" height="200">
+       <div *ngIf="journeyList[i] != journeyList[i-1]">
+         <div *ngIf="i <= 1">
+      <svg width="90" height="200">
         <defs>
           <marker id="arrow" viewBox="0 -5 10 10" refX="5" refY="0" markerWidth="5" markerHeight="5" orient="auto">
             <path class="cool" d="M0,-5L10,0L0,5" class="arrowHead"></path>
           </marker>
         </defs>
-        <line [attr.x1]="x1" y1="10" [attr.x2]="x2" y2="10" stroke="blue" marker-end="url(#arrow)"/>
-        <circle [attr.cx]="x2 + 10" cy="10" r="5" stroke="black" stroke-width="3" fill="blue" />
-        <text  [attr.x]="45" y="30" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text></svg>
+        <line [attr.x1]="x1" y1="60" [attr.x2]="x2" y2="60" stroke="blue" marker-end="url(#arrow)"/>
+        <circle [attr.cx]="x2 + 10" cy="60" r="5" stroke="black" stroke-width="3" fill="blue" />
+        <text  [attr.x]="45" y="80" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text></svg>
       </div>
-      <
+
+      <div *ngIf="i > 1 && journeyList[i-1] != journeyList[i-2]">
+        <svg width="90" height="200">
+          <defs>
+            <marker id="arrow" viewBox="0 -5 10 10" refX="5" refY="0" markerWidth="5" markerHeight="5" orient="auto">
+              <path class="cool" d="M0,-5L10,0L0,5" class="arrowHead"></path>
+            </marker>
+          </defs>
+          <line [attr.x1]="x1" y1="60" [attr.x2]="x2" y2="60" stroke="blue" marker-end="url(#arrow)"/>
+          <circle [attr.cx]="x2 + 10" cy="60" r="5" stroke="black" stroke-width="3" fill="blue" />
+          <text  [attr.x]="45" y="80" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text></svg>
+      </div>
+      <div *ngIf="i > 1 && journeyList[i-1] == journeyList[i-2]">
+        <svg width="120" height="200">
+          <path d=" M 0,10 C 50,10 50,70 100,60 " stroke="grey" stroke-width="3" fill="none" />
+          <circle [attr.cx]="110" cy="60" r="5" stroke="black" stroke-width="3" fill="yellow" />
+          <text  [attr.x]="90" y="80" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text></svg>
+      </div>
+       </div>
+      <div *ngIf="journeyList[i] == journeyList[i-1]">
+        <svg width="195" height="200">
+          <path d="M 0,60 C 50,70 50,10 100,10" stroke="yellow" stroke-width="3" fill="none" />
+          <circle [attr.cx]="100" cy="10" r="5" stroke="black" stroke-width="3" fill="blue" />
+          <text  [attr.x]="60" y="30" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text>
+          <line [attr.x1]="105" y1="10" [attr.x2]="175" y2="10" stroke="blue" marker-end="url(#arrow)"/>
+          <circle [attr.cx]="185" cy="10" r="5" stroke="black" stroke-width="3" fill="blue" />
+          <text  [attr.x]="160" y="30" fill="red"font-family="Times, serif" font-size="10px">{{element}}</text>
+        </svg>
+      </div>
      </div>
     </div>
 

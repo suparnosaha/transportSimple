@@ -43,6 +43,7 @@ export class SelectCityComponent implements OnInit {
   x2: number= 70;
   x3: number= 150;
   svg:SafeHtml
+  equal:boolean;
   addNew()
   {
     this.boxHidden= !(this.boxHidden);
@@ -64,24 +65,47 @@ export class SelectCityComponent implements OnInit {
   {
     this.destination=(event.source.value);
     console.log(this.destination);
+    this.errorMessage=null;
   }
 
   selectedOrigin(event: any){
     this.origin=(event.source.value);
     console.log(this.origin);
+    this.errorMessage=null;
   }
 
   addPath()
   {
     this.loading=true;
-   if(this.origin != undefined && this.destination != undefined)
-    {this.journeyList.push(this.origin.toUpperCase()+"-"+
-    this.destination.toUpperCase());
-    console.log(this.journeyList);
-   this.originArray.push(this.origin);
-   this.destinationArray.push(this.destination);
-   this.loading=false;
+   if(this.origin != undefined && this.destination != undefined && this.origin != this.destination)
+    { 
+      
+      this.journeyList.push(this.origin.toUpperCase()+"-"+
+      this.destination.toUpperCase());
+      console.log(this.journeyList);
+     this.originArray.push(this.origin);
+     this.destinationArray.push(this.destination);
+     this.loading=false;
+      this.equal= false;
+      if(this.journeyList.length> 2)
+      {if(this.journeyList[(this.journeyList.length)-1] === this.journeyList[(this.journeyList.length)-2] &&
+      this.journeyList[(this.journeyList.length)-3] === this.journeyList[(this.journeyList.length)-1] )
+      {
+        this.errorMessage="Cannot enter 3 similar trips Simultaneously";
+        console.log(this.errorMessage);
+        this.journeyList.splice(this.journeyList.length- 1);
+        this.originArray.splice(this.originArray.length -1);
+     this.destinationArray.splice(this.destinationArray.length- 1);
+      }
+      if(this.journeyList[(this.journeyList.length)-3] === this.journeyList[(this.journeyList.length)-2] )
+      this.equal=true;
     }
+
+           
+  }
+  else
+  {this.loading=false;
+  this.errorMessage="Please enter correct origin and Destination";}
   }
   ngOnInit() {
     /**
